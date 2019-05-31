@@ -1,0 +1,113 @@
+<html>
+<head>
+    <title>商品列表</title>
+    <link rel="stylesheet" type="text/css" href="css/frontindex.css">
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+ <!--    <script type="text/javascript" src="js/page.js"></script>
+    <script type="text/javascript" src="js/productlist.js"></script> -->
+    <script type="text/javascript">
+        $(function(){
+      $.ajax({
+            type:"GET",//请求方式:GET
+            url: "http://47.100.205.249/jqueryProject/CategorysecondList",//请求url
+          //请求参数
+            dataType:"jsonp",//数据类型：jsonp
+            jsonp: "jsonpCallback",
+            jsonpCallback: "success_jsonpCallback",
+            success:function(data){
+                // 请求成功 data是json格式
+                var $productcategory=$(".productcategory");
+                var name="";
+                var $div;
+                $(data).each(function(){
+                      var cname=this.category.cname;
+                         if (cname!=name){
+                         var  $category=$("<div class='category'>"+cname+"</div>");
+                         name=cname;
+                         $category.appendTo($productcategory);
+                         $div=$("<div></div>")
+                         
+                         var $span=$("<span>"+this.csname+"</span>");
+                         $div.append($span);
+                         $div.appendTo($productcategory);
+
+                    }else {
+                        var $span=$("<span>"+this.csname+"</span>")
+                        $div.append($span);
+                    }          
+                })  
+            }
+        })
+       $.ajax({
+            type:"GET",//请求方式:GET
+            url:"http://47.100.205.249/jqueryProject/ProductList",//请求url
+          //请求参数
+            dataType:"jsonp",//数据类型：jsonp
+            jsonp: "jsonpCallback",
+            jsonpCallback: "success_jsonpCallback1",
+            success:function(data){
+                // 请求成功 data是json格式
+                var div=$(".products");
+                var div2;
+                $(data).each(function(){
+                         div2=$("<div class='product'>"+
+                                "<img src='images/upload/"+this.image+"'>"+
+                                "<div class='productName'>"+this.pname+"</div>"+
+                                "<div class='productPrice'>商城价："+this.shopprice+"</div></div>");
+                         div.append(div2); 
+                    })  
+                 }  
+         })
+
+  })
+
+    </script>
+</head>
+<body>
+<input type="hidden" id="currentPage" value="1">
+<input type="hidden" id="totalPage" value="">    
+<!-- 左侧类别 -->
+<div class="productcategory">
+    <!-- 格式 -->
+    <!-- <div class="category">女装男装</div>
+    <div>
+        <span>潮流女装</span>
+        <span>初冬羽绒 </span>
+        <span>潮流女装</span>
+        <span>初冬羽绒 </span>
+        <span>潮流女装</span>
+        <span>初冬羽绒 </span>
+        <span>潮流女装</span>
+        <span>初冬羽绒 </span>
+    </div> -->
+    
+</div>
+<div class="productlist">
+    <!-- 格式 -->
+    <div class="products">
+        <!-- <div class="product">
+            <img src="../images/唯品会/1/cs10001.jpg">
+            <div class="productName">韩版连帽加厚毛衣女外套</div>
+            <div class="productPrice">商城价：Y228.0</div>
+        </div> -->
+    </div>
+   
+    <!-- ＜ -->
+    <!-- <div class="page">
+        <span id="previousPage"></span> 
+        <span id="firstPage">1</span>
+        <span id="sl1"></span>
+        <span id="num1"></span>
+        <span id="num2"></span>
+        <span id="num3"></span>
+        <span id="num4"></span>
+        <span id="num5"></span>
+        <span id="sl2"></span>
+        <span id="lastPage"></span>
+        <span id="nextPage">＞</span>
+    </div> -->
+</div>
+
+
+</body>
+</html>
